@@ -1,0 +1,8 @@
+<!-- For backwards compatibility with the old driver files
+                Will be DELETED in the future              -->
+  
+<launch>
+  <node name="leap_data" 
+        pkg="leap_robot_arm" type="cmd_vel.py" output="screen" />
+
+</launch>
