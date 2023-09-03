@@ -3,27 +3,20 @@
 import argparse
 import rospy
 import leap_interface
+from leap_motion.msg import leap
+from leap_motion.msg import leapros
 from geometry_msgs.msg import Twist
 from control_msgs.msg import JointJog
-from sensor_msgs.msg import Joy
 
 TwistMsg = Twist
 joint_deltas = JointJog
 NODENAME = 'leap_data'
 
-def leap_publishing():
-    li =leap_interface.Runner()
-    li.setDaemon(True)
-    li.start()
-    leap_pub = rospy.Publisher('servo_server/cmd_vel',TwistMsg,queue_size=1)
-    joint_delta_pub= rospy.Publisher('servo_server/delta_joint_cmds',JointJog,queue_size=1)
-    joy_sub = rospy.Subscriber('leap/joy',leap_publishing(),queue_size=1)
-    rospy.init_node(NODENAME)
-    rate = rospy.Rate(60)
+def leap_to_twist():
     twist_msg = TwistMsg()
     twist = twist_msg
-
     while not rospy.is_shutdown():
+        #get palm position and orientation
         hand_palm_pos_    = li.get_hand_palmpos()
         hand_pitch_       = li.get_hand_pitch()
         hand_roll_        = li.get_hand_roll()
@@ -35,10 +28,18 @@ def leap_publishing():
         twist.angular.x = hand_pitch_
         twist.angular.y = hand_yaw_
         twist.angular.z = hand_roll_
-        
-        
-        leap_pub.publish(twist_msg)
+               
+        leap_pub.publish(twist)
         rate.sleep()
+def leap_publishing():
+    li =leap_interface.Runner()
+    li.setDaemon(True)
+    li.start()
+    rospy.init_node(NODENAME)
+    rospy.Subscriber("leapmotion/data", leapros, callback_ros)
+    leap_pub = rospy.Publisher('servo_server/delta_twist_cmds',TwistMsg,queue_size=1)
+    joint_delta_pub= rospy.Publisher('servo_server/delta_joint_cmds',JointJog,queue_size=1)
+    rate = rospy.Rate(60)
  
 
 if __name__ == '__main__':
