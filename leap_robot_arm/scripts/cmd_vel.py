@@ -12,7 +12,18 @@ TwistMsg = Twist
 joint_deltas = JointJog
 NODENAME = 'leap_data'
 
+def callback_ros(msg):
+    msg = leapros()
+
 def leap_to_twist():
+    li =leap_interface.Runner()
+    li.setDaemon(True)
+    li.start()
+    rospy.init_node(NODENAME)
+    rospy.Subscriber("leapmotion/data", leapros, callback_ros)
+    leap_pub = rospy.Publisher('servo_server/delta_twist_cmds',TwistMsg,queue_size=1)
+    joint_delta_pub= rospy.Publisher('servo_server/delta_joint_cmds',JointJog,queue_size=1)
+    rate = rospy.Rate(60)
     twist_msg = TwistMsg()
     twist = twist_msg
     while not rospy.is_shutdown():
@@ -28,22 +39,15 @@ def leap_to_twist():
         twist.angular.x = hand_pitch_
         twist.angular.y = hand_yaw_
         twist.angular.z = hand_roll_
-               
+        
+        joint_delta_pub.publish(joint_deltas)       
         leap_pub.publish(twist)
         rate.sleep()
-def leap_publishing():
-    li =leap_interface.Runner()
-    li.setDaemon(True)
-    li.start()
-    rospy.init_node(NODENAME)
-    rospy.Subscriber("leapmotion/data", leapros, callback_ros)
-    leap_pub = rospy.Publisher('servo_server/delta_twist_cmds',TwistMsg,queue_size=1)
-    joint_delta_pub= rospy.Publisher('servo_server/delta_joint_cmds',JointJog,queue_size=1)
-    rate = rospy.Rate(60)
+    
  
 
 if __name__ == '__main__':
     try:
-        leap_publishing()
+        leap_to_twist()
     except rospy.ROSInterruptException:
         pass
