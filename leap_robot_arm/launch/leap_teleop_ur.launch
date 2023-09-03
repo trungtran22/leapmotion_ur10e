@@ -6,7 +6,7 @@
   -->
 
   <!-- This node publishes commands from the controller -->
-  <node name="spacenav_node" pkg="spacenav_node" type="spacenav_node" />
+  <node name="leap_data" pkg="leap_robot_arm" type="cmd_vel.py" />
 
   <!-- This node does the servoing calculations -->
   <node name="servo_server" pkg="moveit_servo" type="servo_server" output="screen" >
@@ -15,7 +15,7 @@
   </node>
 
   <!-- teleop_tools translates leap motion data into a twist message -->
-  <arg name="cmd_vel" default="servo_server/cmd_vel" />
+  <arg name="cmd_vel" default="servo_server/delta_twist_cmds" />
   <arg name="teleop_config" default="$(find leap_robot_arm)/config/leap_via_teleop_tools.yaml" />
   <rosparam file="$(arg teleop_config)" command="load" />
 
