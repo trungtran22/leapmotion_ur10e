@@ -23,7 +23,7 @@ cd ~/catkin_ws
 catkin build
 ```
 
-This project will use package `moveit_servo` for realtime servoing the UR10e. Leapmotion `hand.palm_position`, `hand.pitch`, `hand.yaw` and 'hand.roll' will be transmitted to the robot arm as geometry_msgs/TwistStamped (`linear` and `angular`)
+This project will use package `moveit_servo` for realtime servoing the UR10e. Leapmotion `hand.palm_position`, `hand.pitch`, `hand.yaw` and `hand.roll` will be transmitted to the robot arm as geometry_msgs/TwistStamped (`linear` and `angular`)
 
 **Implementation**
 
