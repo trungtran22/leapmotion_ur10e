@@ -46,7 +46,7 @@ start_asap: false
 timeout: 0.0"
 
 #launch leap control
-roslaunch leap_robot_arm leap_ur.launch
+roslaunch leap_robot_arm leap_teleop_ur.launch
 
 #publish fake signal
 rostopic pub -r 100 -s /servo_server/delta_twist_cmds geometry_msgs/TwistStamped "header: auto
