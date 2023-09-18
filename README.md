@@ -1,4 +1,4 @@
-# leapmotion_ur10e
+# Teleop control - Leap Motion - Robot Arm
 Controlling Ur10e Robot Arm via Leap Motion Controller - Teleop Control
 
 **Clone universal_robot package version 1.2.7:**
