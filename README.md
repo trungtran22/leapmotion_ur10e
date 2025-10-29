@@ -1,5 +1,5 @@
 # Teleop control - Leap Motion - Robot Arm
-Servoing UR10e Robot Arm with Leap Motion Controller 
+##Servoing UR10e Robot Arm with Leap Motion Controller 
 
 **Clone universal_robot package version 1.2.7:**
 ```
@@ -27,7 +27,8 @@ cd ~/catkin_ws
 catkin build
 ```
 
-This project will use package `moveit_servo` for realtime servoing the UR10e. Leapmotion `hand.palm_position`, `hand.pitch`, `hand.yaw` and `hand.roll` will be transmitted to the robot arm as geometry_msgs/TwistStamped (`linear` and `angular`)
+- This project will use package **moveit_servo** for servoing the UR10e.
+- Leapmotion `hand.palm_position`, `hand.pitch`, `hand.yaw` and `hand.roll` will be transmitted to the robot arm as geometry_msgs/TwistStamped (`linearVel` and `angularVel`)
 
 **Implementation (Gazebo):**
 
