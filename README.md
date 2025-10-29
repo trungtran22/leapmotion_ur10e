@@ -5,7 +5,10 @@ Servoing UR10e Robot Arm with Leap Motion Controller
 ```
 cd ~/catkin_ws/src
 git clone -b 1.2.7 https://github.com/ros-industrial/universal_robot
+rosdep update --include-eol-distro
 rosdep install -y --from-paths . --ignore-src --rosdistro $ROS_DISTRO
+cd ~/catkin_ws
+catkin build
 ```
 **Clone leap_motion ROS package:**
 
@@ -18,6 +21,7 @@ export PYTHONPATH=$PYTHONPATH:$HOME/LeapSDK/lib:$HOME/LeapSDK/lib/x86
 
 cd ~/catkin_ws/src
 git clone https://github.com/ros-drivers/leap_motion.git
+rosdep update --include-eol-distro
 rosdep install -y --from-paths . --ignore-src --rosdistro $ROS_DISTRO
 cd ~/catkin_ws
 catkin build
